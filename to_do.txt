@@ -1,0 +1,2 @@
+1. edge case - topping up by negative amounts
+2. test on line 14 - it doesn't cover more
