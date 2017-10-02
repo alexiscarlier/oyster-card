@@ -1,8 +1,9 @@
 require './lib/oystercard'
 
 describe Oystercard do
-end
+  subject(:oystercard) { Oystercard.new }
 
-# NameError: uninitialized constant
-# ./spec/oystercard_spec.rb:
-# Line 1
+  it 'starts with a balance of 0' do
+    expect(oystercard.balance).to eq 0
+  end
+end
