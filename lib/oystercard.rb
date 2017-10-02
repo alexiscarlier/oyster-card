@@ -10,4 +10,8 @@ class Oystercard
     raise 'Sorry, £90 is the limit!' if @balance + amount > MAX_BAL
     @balance += amount
   end
+
+  def deduct(fare)
+    @balance -= fare
+  end 
 end

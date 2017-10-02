@@ -16,4 +16,8 @@ describe Oystercard do
     oystercard.top_up(max_bal)
     expect { oystercard.top_up(1) }.to raise_error 'Sorry, £90 is the limit!'
   end
+
+  it 'gets deduted by the amount of the fare' do
+    expect { oystercard.deduct(1) }.to change { oystercard.balance }.by -1
+  end 
 end
