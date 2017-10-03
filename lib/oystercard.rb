@@ -5,7 +5,6 @@ class Oystercard
 
   def initialize
     @balance = 0
-    @in_journey = false
     @fare = 1
     @entry_station = nil
   end
@@ -16,20 +15,17 @@ class Oystercard
   end
 
   def in_journey?
-    @in_journey
+    !!entry_station
   end
 
   def touch_in(entry_station)
-    # allow(:touch_in).to receive(:entry_station).and_return entry_station
     fail "insufficient funds" if @balance < MIN_BAL
-    @in_journey = true
     @entry_station = entry_station
   end
 
   def touch_out
-    @in_journey = false
     @balance -= @fare
-    @entry_station = nil 
+    @entry_station = nil
   end
 
   private
