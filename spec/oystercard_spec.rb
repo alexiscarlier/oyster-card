@@ -26,13 +26,23 @@ describe Oystercard do
   end
 
   it 'is in journey if you have touched in' do
+    oystercard.top_up(1)
     oystercard.touch_in
     expect(oystercard).to be_in_journey
   end
 
   it 'is out of journey if you touch out' do
+    oystercard.top_up(1)
     oystercard.touch_in
     oystercard.touch_out
-    expect(oystercard).not_to be_in_journey 
+    expect(oystercard).not_to be_in_journey
   end
+
+  it 'does not allow touch_in when balance is < 1' do
+    expect {oystercard.touch_in }.to raise_error "insufficient funds"
+  end
+
+
+
+
 end
