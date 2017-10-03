@@ -17,9 +17,9 @@ describe Oystercard do
     expect { oystercard.top_up(1) }.to raise_error 'Sorry, £90 is the limit!'
   end
 
-  it 'gets deduted by the amount of the fare' do
-    expect { oystercard.deduct(1) }.to change { oystercard.balance }.by -1
-  end
+  # it 'gets deduted by the amount of the fare' do
+  #   expect { oystercard.deduct(1) }.to change { oystercard.balance }.by -1
+  # end
 
   it 'is initially not in a journey' do
     expect(subject).not_to be_in_journey
@@ -47,5 +47,5 @@ describe Oystercard do
     oystercard.touch_in
     expect { oystercard.touch_out }.to change { oystercard.balance }.by -1
   end
-  
+
 end
