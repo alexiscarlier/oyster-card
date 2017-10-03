@@ -4,6 +4,7 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @in_journey = false
   end
 
   def top_up(amount)
@@ -15,12 +16,14 @@ class Oystercard
     @balance -= fare
   end
 
-  def in_journey?
-    false
-  end
+  attr_accessor :in_journey
 
   def touch_in
-    true 
+    @in_journey = true
+  end
+
+  def touch_out
+    @in_journey = false
   end
 
 end

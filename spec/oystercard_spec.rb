@@ -22,11 +22,17 @@ describe Oystercard do
   end
 
   it 'is out of journey if you havent touched in' do
-    expect(oystercard.in_journey?).to eq false
+    expect(oystercard.in_journey).to eq false
   end
 
   it 'is in journey if you have touched in' do
-    expect(oystercard.touch_in).to eq true
+    oystercard.touch_in
+    expect(oystercard.in_journey).to eq true
   end
 
+  it 'is out of journey if you touch out' do
+    oystercard.touch_in
+    oystercard.touch_out
+    expect(oystercard.in_journey).to eq false
+  end 
 end
