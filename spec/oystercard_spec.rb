@@ -1,7 +1,10 @@
 require './lib/oystercard'
 
+
 describe Oystercard do
   subject(:oystercard) { Oystercard.new }
+
+
 
   it 'starts with a balance of 0' do
     expect(oystercard.balance).to eq 0
@@ -12,8 +15,8 @@ describe Oystercard do
   end
 
   it 'raises and error if top up exceeds max' do
-    max_bal = Oystercard::MAX_BAL
-    oystercard.top_up(max_bal)
+    # max_bal = Oystercard::MAX_BAL
+    oystercard.top_up(Oystercard::MAX_BAL)
     expect { oystercard.top_up(1) }.to raise_error 'Sorry, £90 is the limit!'
   end
 
@@ -26,13 +29,13 @@ describe Oystercard do
   end
 
   it 'is in journey if you have touched in' do
-    oystercard.top_up(1)
+    oystercard.top_up(Oystercard::MIN_BAL)
     oystercard.touch_in
     expect(oystercard).to be_in_journey
   end
 
   it 'is out of journey if you touch out' do
-    oystercard.top_up(1)
+    oystercard.top_up(Oystercard::MIN_BAL)
     oystercard.touch_in
     oystercard.touch_out
     expect(oystercard).not_to be_in_journey
@@ -45,7 +48,7 @@ describe Oystercard do
   it 'deducts fare as you touch out' do
     oystercard.top_up(10)
     oystercard.touch_in
-    expect { oystercard.touch_out }.to change { oystercard.balance }.by -1
+    expect { oystercard.touch_out }.to change { oystercard.balance }.by -Oystercard::MIN_BAL
   end
 
 end
