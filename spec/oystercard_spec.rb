@@ -21,18 +21,18 @@ describe Oystercard do
     expect { oystercard.deduct(1) }.to change { oystercard.balance }.by -1
   end
 
-  it 'is out of journey if you havent touched in' do
-    expect(oystercard.in_journey).to eq false
+  it 'is initially not in a journey' do
+    expect(subject).not_to be_in_journey
   end
 
   it 'is in journey if you have touched in' do
     oystercard.touch_in
-    expect(oystercard.in_journey).to eq true
+    expect(oystercard).to be_in_journey
   end
 
   it 'is out of journey if you touch out' do
     oystercard.touch_in
     oystercard.touch_out
-    expect(oystercard.in_journey).to eq false
-  end 
+    expect(oystercard).not_to be_in_journey 
+  end
 end
