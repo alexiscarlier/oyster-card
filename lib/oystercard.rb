@@ -13,5 +13,9 @@ class Oystercard
 
   def deduct(fare)
     @balance -= fare
+  end
+
+  def in_journey?
+    false
   end 
 end

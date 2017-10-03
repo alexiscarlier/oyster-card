@@ -19,5 +19,9 @@ describe Oystercard do
 
   it 'gets deduted by the amount of the fare' do
     expect { oystercard.deduct(1) }.to change { oystercard.balance }.by -1
+  end
+
+  it 'is out of journey if you havent touched in' do
+    expect(oystercard.in_journey?).to eq false
   end 
 end
