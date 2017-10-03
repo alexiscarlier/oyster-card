@@ -1,5 +1,5 @@
 class Oystercard
-  attr_reader :balance, :fare, :entry_station
+  attr_reader :balance, :fare, :entry_station, :exit_station
   MAX_BAL = 90
   MIN_BAL = 1
 
@@ -7,6 +7,7 @@ class Oystercard
     @balance = 0
     @fare = 1
     @entry_station = nil
+    @exit_station = nil
   end
 
   def top_up(amount)
@@ -23,9 +24,10 @@ class Oystercard
     @entry_station = entry_station
   end
 
-  def touch_out
+  def touch_out(exit_station)
     @balance -= @fare
     @entry_station = nil
+    @exit_station = exit_station
   end
 
   private
