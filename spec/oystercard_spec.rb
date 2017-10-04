@@ -6,6 +6,7 @@ describe Oystercard do
 
   let(:entry_station) { double(:entry_station) }
   let(:exit_station) { double(:exit_station) }
+  let(:journey) { {entry_station: entry_station, exit_station: exit_station} }
 
   it 'starts with a balance of 0' do
     expect(oystercard.balance).to eq 0
@@ -53,7 +54,7 @@ describe Oystercard do
 
       it 'creates a journey hash with the entry station as key' do
         oystercard.touch_out(exit_station)
-        expect(oystercard.journeys).to eq [{entry_station: entry_station, exit_station: exit_station}]
+        expect(oystercard.journeys).to include journey
       end
   end
 
