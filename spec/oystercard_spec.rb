@@ -60,4 +60,15 @@ describe Oystercard do
     expect(oystercard.exit_station).to eq exit_station
   end
 
+  it 'expects the list of journeys to be empty by default' do
+    expect(oystercard.journeys).to eq({})
+  end
+
+  it 'creates a journey hash with the entry station as key' do
+    oystercard.top_up(10)
+    oystercard.touch_in(entry_station)
+    oystercard.touch_out(exit_station)
+    expect(oystercard.journeys).to eq({entry_station => exit_station})
+  end
+
 end
