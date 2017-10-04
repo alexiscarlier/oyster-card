@@ -24,51 +24,45 @@ describe Oystercard do
     expect(subject).not_to be_in_journey
   end
 
-  it 'is in journey if you have touched in' do
-    oystercard.top_up(Oystercard::MIN_BAL)
-    oystercard.touch_in(entry_station)
-    expect(oystercard.in_journey?).to eq true
-  end
+  context 'topped up and touched in' do
+    before do
+      oystercard.top_up(Oystercard::MIN_BAL)
+      oystercard.touch_in(entry_station)
+    end
+      it 'is in journey if you have touched in by minimum balance' do
+        expect(oystercard.in_journey?).to eq true
+      end
 
-  it 'is out of journey if you touch out' do
-    oystercard.top_up(Oystercard::MIN_BAL)
-    oystercard.touch_in(entry_station)
-    oystercard.touch_out(exit_station)
-    expect(oystercard.in_journey?).to eq false
+      it 'is out of journey if you touch out' do
+        oystercard.touch_out(exit_station)
+        expect(oystercard.in_journey?).to eq false
+      end
+
+      it 'deducts fare as you touch out' do
+        expect { oystercard.touch_out(exit_station) }.to change { oystercard.balance }.by -Oystercard::MIN_BAL
+      end
+
+      it 'remembers the entry station after the touch in' do
+         expect(oystercard.entry_station).to eq entry_station
+      end
+
+      it 'remembers the exit station after the touch out' do
+        oystercard.touch_out(exit_station)
+        expect(oystercard.exit_station).to eq exit_station
+      end
+
+      it 'creates a journey hash with the entry station as key' do
+        oystercard.touch_out(exit_station)
+        expect(oystercard.journeys).to eq [{entry_station: entry_station, exit_station: exit_station}]
+      end
   end
 
   it 'does not allow touch_in when balance is < 1' do
     expect {oystercard.touch_in(entry_station) }.to raise_error "insufficient funds"
   end
 
-  it 'deducts fare as you touch out' do
-    oystercard.top_up(10)
-    oystercard.touch_in(entry_station)
-    expect { oystercard.touch_out(exit_station) }.to change { oystercard.balance }.by -Oystercard::MIN_BAL
-  end
-
-  it 'remembers the entry station after the touch in' do
-     oystercard.top_up(10)
-     oystercard.touch_in(entry_station)
-     expect(oystercard.entry_station).to eq entry_station
-  end
-
-  it 'remembers the exit station after the touch out' do
-    oystercard.top_up(10)
-    oystercard.touch_in(entry_station)
-    oystercard.touch_out(exit_station)
-    expect(oystercard.exit_station).to eq exit_station
-  end
-
   it 'expects the list of journeys to be empty by default' do
     expect(oystercard.journeys).to be_empty
-  end
-
-  it 'creates a journey hash with the entry station as key' do
-    oystercard.top_up(10)
-    oystercard.touch_in(entry_station)
-    oystercard.touch_out(exit_station)
-    expect(oystercard.journeys).to eq [{entry_station: entry_station, exit_station: exit_station}]
   end
 
 end
