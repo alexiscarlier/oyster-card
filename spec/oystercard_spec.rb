@@ -6,6 +6,10 @@ describe Oystercard do
 
   let(:entry_station) { double(:entry_station) }
   let(:exit_station) { double(:exit_station) }
+  # entry_station = double(:entry_station)
+  # # , entry_station => entry_station)
+  # allow(oysercard).to receive(:entry_station).and_return(entry_station)
+  # exit_station = double(:exit_station, exit_station => exit_station )
   let(:journey) { {entry_station: entry_station, exit_station: exit_station} }
 
   it 'starts with a balance of 0' do
@@ -22,7 +26,7 @@ describe Oystercard do
 
 
   it 'is initially not in a journey' do
-    expect(subject).not_to be_in_journey
+    expect(oystercard.in_journey).to eq false
   end
 
   context 'topped up and touched in' do
@@ -31,12 +35,12 @@ describe Oystercard do
       oystercard.touch_in(entry_station)
     end
       it 'is in journey if you have touched in by minimum balance' do
-        expect(oystercard.in_journey?).to eq true
+        expect(oystercard.in_journey).to eq true
       end
 
       it 'is out of journey if you touch out' do
         oystercard.touch_out(exit_station)
-        expect(oystercard.in_journey?).to eq false
+        expect(oystercard.in_journey).to eq false
       end
 
       it 'deducts fare as you touch out' do
@@ -44,12 +48,15 @@ describe Oystercard do
       end
 
       it 'remembers the entry station after the touch in' do
-         expect(oystercard.entry_station).to eq entry_station
+        # allow(oysercard).to receive(:entry_station).and_return(entry_station)
+         expect(oystercard.journey).to eq({:entry_station => entry_station})
+        #  expect(oystercard.entry_station).to eq entry_station
       end
 
       it 'remembers the exit station after the touch out' do
         oystercard.touch_out(exit_station)
-        expect(oystercard.exit_station).to eq exit_station
+
+        expect(oystercard.journeys).to eq([{:entry_station => entry_station, :exit_station => exit_station}])
       end
 
       it 'creates a journey hash with the entry station as key' do
