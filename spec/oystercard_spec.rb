@@ -46,6 +46,8 @@ describe Oystercard do
 
      it 'charges a normal fare by default' do
        oystercard.touch_out(exit_station)
+       allow(journey).to receive(:journey_complete?).and_return true
+       oystercard.charge_penalty_fare?(journey)
        expect(oystercard.fare).to eq Oystercard::NORMAL_FARE
     end
       # it 'remembers the entry station after the touch in' do
