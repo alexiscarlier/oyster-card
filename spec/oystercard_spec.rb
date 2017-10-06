@@ -62,7 +62,7 @@ describe Oystercard do
           allow(journey).to receive(:journey_complete?).and_return true
           oystercard.charge_penalty_fare?(journey)
           # allow(journey).to receive(:in_journey?).and_return false
-          expect(oystercard.fare).to eq 6
+          expect(oystercard.fare).to eq Oystercard::PENALTY_FARE
         end
   end
 

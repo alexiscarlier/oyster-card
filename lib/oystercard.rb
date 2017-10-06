@@ -5,10 +5,12 @@ class Oystercard
 
   MAX_BAL = 90
   MIN_BAL = 1
+  PENALTY_FARE = 6
+  NORMAL_FARE = 1
 
   def initialize
     @balance = 0
-    @fare = 1
+    @fare = NORMAL_FARE
     # @journey = {}
     # @journeys = []
     # @in_journey = false
@@ -38,7 +40,7 @@ class Oystercard
   end
 
   def charge_penalty_fare?(journey)
-    @fare = 6 if journey.journey_complete? && @touched_in
+    @fare = PENALTY_FARE if journey.journey_complete? && @touched_in
   end
 
   private
