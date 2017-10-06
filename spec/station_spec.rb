@@ -1,11 +1,15 @@
 require './lib/station'
 
+
+
 describe Station do
+  subject(:station) { Station.new }
+  
   it 'expects a station to have a zone' do
-    expect(subject.zone).to eq "zone"
+    expect(station.zone).to eq "zone"
   end
 
   it 'expects a station to have a name' do
-    expect(subject.name).to eq "name"
+    expect(station.name).to eq "name"
   end
 end
