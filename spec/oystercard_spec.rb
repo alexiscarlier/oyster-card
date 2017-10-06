@@ -44,6 +44,10 @@ describe Oystercard do
         expect { oystercard.touch_out(exit_station) }.to change { oystercard.balance }.by -Oystercard::MIN_BAL
       end
 
+     it 'charges a normal fare by default' do
+       oystercard.touch_out(exit_station)
+       expect(oystercard.fare).to eq Oystercard::NORMAL_FARE
+    end
       # it 'remembers the entry station after the touch in' do
       #    expect(oystercard.journey).to eq({:entry_station => entry_station})
       # end
